@@ -1,0 +1,38 @@
+<?php
+
+
+
+/* 
+
+ * To change this license header, choose License Headers in Project Properties.
+
+ * To change this template file, choose Tools | Templates
+
+ * and open the template in the editor.
+
+ */
+
+
+
+include_once('lib/DataContext.php');
+
+$db = new DataContext();
+
+$activity = new Activity();
+
+$activity->id = $_GET['open_email'];
+
+$activity->email_open = '1';
+
+$activity->link_visit_open = '0';
+
+$db->Update($activity);
+
+$db->Submit();
+
+
+//ping recorder
+$activity = $db->Activities->Find("id = ".intval($_GET['open_email']));
+file_get_contents("http://hearttools.heart.org/aha_ym18/api/activity/".$activity->event_id."/".$activity->supporter_id."/ecard_opened?key=6Mwqh5dFV39HLDq7")
+
+?> 

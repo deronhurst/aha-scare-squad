@@ -1,0 +1,1 @@
+jquery1234(<?php echo json_encode($data); ?>)

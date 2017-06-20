@@ -1,0 +1,308 @@
+body {
+	margin: 0;
+	padding: 0;
+	color: #000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12pt;
+}
+input[type=text], input[type=password], select, .fakefield, #popdialog a.listitem {
+	border-radius: 0.5em;
+	border: #bbbbbb solid 1px;
+	font-size: 11pt;
+	padding: 0.3em;
+	color: #333;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f4f4f4), to(#ffffff));
+	background: -webkit-linear-gradient(top, #ffffff, #f4f4f4);
+	background: -moz-linear-gradient(top, #ffffff, #f4f4f4);
+	background: -ms-linear-gradient(top, #ffffff, #f4f4f4);
+	background: -o-linear-gradient(top, #ffffff, #f4f4f4);
+}
+.header {
+	padding: 5px;
+	background-color: #fff;
+	clear: both;
+	overflow: auto;/*height:80px;*/
+}
+#logo {
+	width: 200px;
+	height: 80px;
+	//float: left
+}
+#header-inner {
+	width: 250px;
+	float: right;
+	height: 80px;
+}
+#header-inner-top {
+	padding: 5px;
+	text-align: right
+}
+#header-inner-bottom {
+	text-align: right;
+	padding-top: 10px;
+}
+.padded {
+	padding: 15px;
+}
+/*
+.leftcol {
+	width: 49%;
+	float: left;
+	margin-right: 15px;
+}
+.rightcol {
+	width: 49%;
+	float: left
+}*/
+.panel h2, .whitepanel h2 {
+	margin-top: 0;
+	padding-top: 0
+}
+.adminmenu {
+}
+.body {
+	padding: 15px;
+}
+.footer {
+}
+.hr {
+	border-top: #bbbbbb solid 1px;
+}
+/***** text classes *****/
+.lightgray {
+	color: #9999
+}
+.midgray {
+	color: #666;
+}
+.gray {
+	color: #333;
+}
+/****** loading message themes*/
+#loadingmessage {
+	min-width: 200px;
+	clear: both;
+	position: fixed;
+	z-index: 9999;
+	padding: 12pt;
+	text-align: center;
+	border-radius: 0.5em;
+	box-shadow: 0 0 10pt 2pt #999;
+	top: 0;
+	cursor: default;
+	display: none;
+}
+.msgtheme_yellow {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff7b2), to(#fefcee));
+	background: -webkit-linear-gradient(top, #fefcee, #fff7b2);
+	background: -moz-linear-gradient(top, #fefcee, #fff7b2);
+	background: -ms-linear-gradient(top, #fefcee, #fff7b2);
+	background: -o-linear-gradient(top, #fefcee, #fff7b2);
+	border: #e32b2b solid 1px;
+}
+.msgtheme_blue {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#5084b5), to(#6facd5));
+	background: -webkit-linear-gradient(top, #6facd5, #5084b5);
+	background: -moz-linear-gradient(top, #6facd5, #5084b5);
+	background: -ms-linear-gradient(top, #6facd5, #5084b5);
+	background: -o-linear-gradient(top, #6facd5, #5084b5);
+	border: #194B7E solid 1px;
+	color: #fff;
+}
+.msgtheme_black {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#131313), to(#484848));
+	background: -webkit-linear-gradient(top, #484848, #131313);
+	background: -moz-linear-gradient(top, #484848, #131313);
+	background: -ms-linear-gradient(top, #484848, #131313);
+	background: -o-linear-gradient(top, #484848, #131313);
+	border: #fff solid 1px;
+	color: #fff;
+}
+/* menu list ************************/
+#amenulist, #auserlist {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	clear: both;
+	overflow: auto;
+}
+#amenulist li {
+	clear: both;
+	overflow: auto;
+	margin-bottom: 1pt;
+}
+#amenulist li.ttopmenu a {
+	color: #e72541
+}
+#amenulist li.tsubmenu {
+	padding-left: 2%
+}
+#amenulist a {
+	display: block;
+	padding: 5pt;
+	color: #666;
+}
+.nmbtn {
+	width: 80%;
+	float: left;
+}
+.upbtn {
+	width: 10%;
+	background-image: url(../images/arrow_up.png);
+	background-position: 90% center;
+	float: right;
+	min-height: 26px;
+	background-repeat: no-repeat;
+	border-left: #bbb solid 1px;
+	width: 41px;
+}
+/********* user accounts **********/
+#auserlist li {
+	margin-bottom: 2pt;
+	padding: 5pt;
+}
+#auserlist span {
+	display: block
+}
+.alist-user-dname {
+	font-weight: bold;
+}
+.alist-user-name {
+	color: #333
+}
+.alist-user-roles {
+	color: #666;
+	font-size: 10pt;
+}
+.loadoptions {
+	padding: 5pt;
+	padding-left: 30px;
+}
+#popdialog {
+	position: absolute;
+	box-shadow: 0 0 5pt #999;
+	border: #777 solid 1px;
+	display: none;
+}
+#popdialog a.listitem {
+	display: block;
+	margin-bottom: 3pt;
+	color: #333;
+	width: 300px;
+	padding: 8pt;
+	padding-left: 30px;
+}
+#popdialog a.select {
+	background-image: url(../images/tick.png);
+	background-repeat: no-repeat;
+	background-position: 1% center;
+}
+#reportlist, #reportlist ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#reportlist li {
+	clear: both;
+	overflow: auto;
+}
+#reportlist a {
+	padding: 3pt;
+	display: inline-block;
+	margin-bottom: 3pt;
+}
+#reportlist li li:hover a {
+	color: #2489CE
+}
+#reportlist a.projectname {
+	color: #c7262e;
+	font-weight: bold;
+	float: left;
+}
+#reportlist a.categoryname {
+	color: #000;
+	width: 300pt;
+	padding-left: 30pt;
+	float: left;
+}
+.cat_upload {
+	background-image: url(../images/upload.png);
+	min-width: 24px;
+	min-height: 24px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+	float: right;
+}
+.date-blocks {
+	clear: both;
+	font-size: 10pt;
+	padding-left: 100pt;
+	color: #333;
+	border-bottom: #ddd solid 1px;
+	padding-bottom:3px;
+}
+.formgrid {
+	background-color: #ddd;
+}
+.formgrid td {
+	background-color: #fff;
+}
+.formgrid tr.th td {
+	background-color: #666;
+	color: #fff;
+}
+.formgrid tr.alt td {
+	background-color: #eee;
+}
+
+.emptyerror {
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#b65659), to(#d15e68));
+	background: -webkit-linear-gradient(top, #d15e68, #b65659);
+	background: -moz-linear-gradient(top, #d15e68, #b65659);
+	background: -ms-linear-gradient(top, #d15e68, #b65659);
+	background: -o-linear-gradient(top, #d15e68, #b65659);
+	border: #8c374a solid 1px;
+}
+.hierarchy-block { padding:5px; padding-left:50px;}
+
+
+.content_inner {
+	padding: 15px;
+}
+
+table {
+    border-collapse: collapse;
+}
+table, td, th {
+    font-size: 13px;
+    text-align: left;
+}
+th {
+    background-color: #DE4A55;
+    border: 1px solid #DE4A55;
+    color: #FFFFFF;
+    padding: 5px;
+}
+td {
+    border: 1px solid #DE4A55;
+    padding: 5px;
+}
+td.actions_cell {
+    text-align: center;
+}
+
+#login_form table td {
+	border: 0;
+}
+.noborder td { border:none}
+
+.message {
+	background-color: #D5F2D5;
+    border: 1px solid #028204;
+    margin: 0 0 15px;
+    max-width: 1000px;
+    padding: 10px;
+}

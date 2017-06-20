@@ -1,0 +1,60 @@
+<pre><?php
+set_time_limit(0);
+include_once('lib/DataContext.php');
+include_once('lib/ReportHelper.php');
+
+$db = new DataContext();
+$db->NonQuery("truncate table donations");
+
+$login = file_get_contents('http://atlas.zurigroup2.com/api/login?api_key=UyueAsWo1rQmLu7vXz2IB8H22BmUMmGWzwzymlLy');
+$login = json_decode($login);
+
+$helper = new ReportHelper($login->username, $login->password);
+
+$reports = $db->Query("select * from reports");
+
+foreach ($reports as $rpt) {
+	
+	echo $rpt['account_name']." ";
+
+	$data = $helper->getReport($rpt['account_id'], $rpt['report_id']);
+	
+	echo (count($data)-1)."\n";
+
+	foreach ($data as $item){
+		
+		if(trim($item['name']) == 'Totals'){
+			continue;	
+		}
+		
+		$don = new Donation();
+		$don->account = $rpt['account_name'];
+		$don->name = $item['name'];
+		$don->code = $item['code'];
+		$don->activity_count_percent = cleanup($item['%_of_count_activity']);
+		$don->counts = cleanup($item['counts']);
+		$don->donation = cleanup($item['$_donation']);
+		$don->donation_count_percent = cleanup($item['%_of_donation_activity']);
+		$don->created = 'now';
+		
+		$db->Save($don);
+		$db->Submit();
+		
+		//print_r($don);
+		
+	}
+	
+
+
+} // each rpt
+
+echo "Done";
+
+function cleanup ( $val) {
+	
+	return trim(str_replace(
+			array('$','%',','),
+			array('','',''),
+			$val));	
+}
+?></pre>

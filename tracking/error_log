@@ -1,0 +1,4 @@
+[17-Mar-2016 05:57:22 America/Los_Angeles] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 32 bytes) in /home/ahatools/public_html/ecards/tracking/lib/util.php on line 37
+[29-Mar-2016 05:03:41 America/Los_Angeles] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 71 bytes) in /home/ahatools/public_html/ecards/tracking/lib/util.php on line 44
+[20-Apr-2016 08:38:49 America/Los_Angeles] PHP Fatal error:  Allowed memory size of 268435456 bytes exhausted (tried to allocate 71 bytes) in /home/ahatools/public_html/ecards/tracking/lib/util.php on line 44
+[30-Sep-2016 14:31:21 America/Los_Angeles] PHP Parse error:  syntax error, unexpected '%' in /home/ahatools/public_html/zoocrew/tracking/lib/ReportHelper.php on line 38

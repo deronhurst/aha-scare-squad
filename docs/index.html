@@ -1,0 +1,175 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Zoocrew API Documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/default.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/languages/javascript.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/languages/json.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/languages/html.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="alert alert-info col-xs-12 col-md-8 col-md-push-2" role="alert">
+                    <h4 class="alert-heading">Notes:</h4>
+                    <ul>
+                        <li>Every JSON API requires an API key, which is included in the example. This key will likely change</li>
+                        <li>The JSON APIs require a callback to be passed in order to return a JSONP object (jQuery's getJSON method includes it by default). It will otherwise return a normal JSON object.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <article class="col-xs-12 col-md-8 col-md-push-2">
+                    <h1>Register a new student</h1>
+                    <p>This pixel should be included on the registration confirmation page.</p>
+                    <pre><code class="html">
+&lt;img style="position: absolute; top: 10px; left: 10px; width: 1px; height: 1px;" src="https://hearttools.heart.org/aha_ym18/api/student/register/[[S42:0:fr-id]]/[[S1:cons_id]]?team_id=1&school_id=1" alt="" /&gt;
+                    </code></pre>
+                    <p>That is, <code>register/<strong>{teamraiser_id}/{constituent_id}</strong>(?(team_id={team_id})(&school_id={school_id}))</code>. Both team ID and school ID are optional and if either (or both) are included, they will be used to populate our record.</p>
+                </article>
+                <article class="col-xs-12 col-md-8 col-md-push-2">
+                    <h1>Get a student's information</h1>
+                    <pre>http://hearttools.heart.org/aha_ym18/api/student/1163033/438147777?key=6Mwqh5dFV39HLDq7</code></pre>
+                    <p>That is, <code>student<strong>/{teamraiser_id}</strong><strong>/{constituent_id}</strong></code>. This returns:</p>
+                    <pre><code class="json">
+{
+    "status":"success", //Status of the call; "success" or "error"
+
+    //For success calls:
+    "challenges":{
+        "current": 1, //Activity ID; INT
+        "text": "Be physically active for 60 minutes everyday", //Activity text; STRING
+        "completed":0, //Number of times a daily challenge was completed; INT
+        "completedToday":false //Whether the last time the daily challenge was completed fell on this calendar day, server time; BOOL 
+    },
+    "ecards":{
+        "sent":2, //Number of ecards sent; INT
+        "shared": 0 //Number of ecards shared; INT 
+    }
+
+    //For error calls
+    "message": "Not found" //Error message "Not found" or "Database error"
+}
+                    </code></pre>
+                </article>
+                <article class="col-xs-12 col-md-8 col-md-push-2">
+                    <h1>Get the roll-up for a school, event, team, or whole program</h1>
+                    <pre>http://hearttools.heart.org/aha_ym18/api/program/event/1163033?key=6Mwqh5dFV39HLDq7</pre>
+                    <p>That is, <code>program<strong>(/{group_type}/{group_id})</strong></code>.</p>
+                    <p><code>Group_type</code> can be one of: <code>event</code>,
+                    <code>team</code>, or
+                    <code>school</code>. If no group_type is given (please don't use a trailing slash), the program total will be returned.</p>
+                    <p>If a <code>group_type</code> is supplied, a <code>group_id</code> is also required. This should be the <code>teamraiser_id</code>, <code>team_id</code> or <code>company_id</code> in Luminate (respectively).</p>
+                    <p>This returns:</p>
+                    <pre><code class="json">
+{
+    "studentsPledged": 4, //Total number of students in this roll-up; INT
+    "studentsPledgedByActivity": {
+        //The ID of the activity as a string; the property is an object of key-value pairs containing the "count" (the number of students registered to that challenge) and "text" (the text of that challenge)
+        //Only activities with students registered in this roll-up will be included. If the activity isn't included, that activity implicitly has zero registrants for this roll-up
+        "1": {"count": 1, "text": "Be physically active for 60 minutes everyday"},
+        "2": {"count": 1, "text": "Choose water over sugar drinks"},
+        "3": {"count": 1, "text": "Eat at least one serving of fruit or vegetables at every meal"},
+        "4": {"count": 1, "text": "I am learning how to take care of my heart"}
+    }
+} 
+                    </code></pre>
+                </article>
+                <article class="col-xs-12 col-md-8 col-md-push-2">
+                    <h1>Log a daily activity for a student</h1>
+                    <pre>http://hearttools.heart.org/aha_ym18/api/student/1163033/438147777/1?key=6Mwqh5dFV39HLDq7</pre>
+                    <p>That is, <code>student<strong>/{teamraiser_id}</strong><strong>/{constituent_id}/{challenge_id}</strong></code>. This returns:</p>
+                    <pre><code class="json">
+{
+    "status": "success" //The status of the call, either "success" or "error"
+}                         
+                    </code></pre>
+                </article>
+                <article class="col-xs-12 col-md-8 col-md-push-2">
+                    <h1>Launch ecard</h1>
+                    <p>To create an ecard as our sample user, Molly Johnson, go to: <a href="http://hearttools.heart.org/aha_ym18/?eid=1163033&sid=438147777&name=Molly%20Johnson">http://hearttools.heart.org/aha_ym18/?eid=1163033&sid=438147777&name=Molly%20Johnson</a></p>
+                    <p>That is, <code>?<strong>eid={teamraiser_id}</strong>&<strong>sid={constituent_id}</strong></code>. When you register other users with the above endpoints, you can use your sample teamraiser and constituent IDs in their place.</p>
+                </article>
+                <article class="col-xs-12 col-md-8 col-md-push-2">
+                    <h1>Track when an ecard is open</h1>
+                    <p>Include the following <code>&lt;img&gt;</code> tag in your email. You'll need to include the activity ID</p>
+                    <pre><code class="html">&lt;img alt="" src="http://hearttools.heart.org/aha_ym18/emailopen_record.php?open_email=[aid]" width="1" height="1" border="0" style="width:1px; height:1px;"/&gt;</code></pre>
+
+                </article>
+                <article class="col-xs-12 col-md-8 col-md-push-2">
+                    <h1>Launch Expedition/Mission</h1>
+                    <p>To launch the expedition from the PC, use the following pattern:</p>
+                    <pre>http://hearttools.heart.org/aha_ym18/expedition/?eid=1163061&sid=413321591&name=Heart%20Hero%20School</pre>
+                    <p>That is <code>? eid={teamraiser_id} & sid={constituent_id}</code>. Name is the name of the fundraiser.</p>
+                </article>
+                <article class="col-xs-12 col-md-8 col-md-push-2">
+                    <h1>Track a link followed from an ecard</h1>
+<p>This javascript code snippet looks for <code>ecard_linktrack</code> URL parameter on the current page. If it finds it, it will access the API endpoint to register a visit</p>                    
+                    <pre><code class="javascript">
+if(window.location.href.indexOf('ecard_linktrack=') > 0){
+    var uparts = window.location.href.split('ecard_linktrack=');
+    uparts = uparts[1].split('&');
+   
+    var scriptTag = document.createElement('script');
+    scriptTag.src = 'https://hearttools.heart.org/aha_ym18/visitlink_record.php?ecard_linktrack='+uparts[0];
+    document.body.appendChild(scriptTag);
+}                        
+                    </code></pre>
+                </article>
+                <article class="col-xs-12 col-md-8 col-md-push-2">
+                    <h1>Get a list of challenges</h1>
+                    <pre>http://hearttools.heart.org/aha_ym18/api/student/challenges/1163033/438147777?key=6Mwqh5dFV39HLDq7</code></pre>
+                    <p>That is, <code>student/challenges<strong>/{teamraiser_id}</strong><strong>/{event_id}</strong></code></p>
+                    <p>This returns a status and list of challenges and their numberical IDs in the database.</p>
+                    <pre><code class="json">
+{
+    "status": "success",
+    "challenges": {
+        //The ID of the challenge as a string, and the text of the challenge
+        "1": "Be physically active for 60 minutes everyday",
+        "2": "Choose water over sugar drinks",
+        "3": "Eat at least one serving of fruit or vegetables at every meal"
+    }
+} 
+                    </code></pre>
+                </article>
+                <article class="col-xs-12 col-md-8 col-md-push-2">
+                    <h1>Update a student's challenge</h1>
+                    <pre>http://hearttools.heart.org/aha_ym18/api/student/challenge/1163033/438147777?challenge=2&key=6Mwqh5dFV39HLDq7</code></pre>
+                    <p>That is, <code>student/challenge<strong>/{teamraiser_id}</strong><strong>/{event_id}</strong>?<strong>challenge={challenge_id}</strong></code></p>
+                    <p>This endpoint is intended to receive submissions from the above form but is available to any callers.</p>
+                </article>
+            </div>
+        </div>
+
+        <style type="text/css">
+            pre{
+                font-family: monospace;
+                width: 100%;
+                max-width: 40em;
+                border: 1px solid grey;
+                background: #eee;
+                white-space: pre;
+                display: block
+            }
+        </style>
+    </body>
+</html>
